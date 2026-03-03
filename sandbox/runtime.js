@@ -8,6 +8,9 @@ const crypto = require("crypto");
 const globalsModule = require("./modules/globals");
 const logModule = require("./modules/log");
 const fsModule = require("./modules/fs");
+const cryptoModule = require("./modules/crypto");
+const sqliteModule = require("./modules/sqlite");
+const httpModule = require("./modules/http");
 
 
 async function runTs(helpers, code, { cwd = process.cwd(), signal } = {}) {
@@ -21,7 +24,7 @@ async function runTs(helpers, code, { cwd = process.cwd(), signal } = {}) {
   const helperContents = await Promise.all(helpers.map((h) => readHelper(h)));
   const totalCode = [...helperContents, code].join("\n\n//----\n\n");
 
-  
+
 
   // Transpile TypeScript to JavaScript
   const transpileResult = ts.transpileModule(totalCode, {
@@ -55,7 +58,10 @@ async function runTs(helpers, code, { cwd = process.cwd(), signal } = {}) {
   await logModule.register(context, { logs });
 
   await fsModule.register(context, { cwd });
-  
+  await cryptoModule.register(context, { cwd });
+  await sqliteModule.register(context, { cwd });
+  await httpModule.register(context, { cwd });
+
 
   try {
     // Run the code and wait for promises

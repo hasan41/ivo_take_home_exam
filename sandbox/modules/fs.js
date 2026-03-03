@@ -26,16 +26,28 @@ function createReadFileCallback(cwd) {
   };
 }
 
+function createReaddirCallback(cwd) {
+  return function (dirPath) {
+    try {
+      const resolvedPath = validatePath(cwd, dirPath);
+      return fs.readdirSync(resolvedPath);
+    } catch (e) {
+      throw new Error(`Error reading directory: ${e.message}`);
+    }
+  };
+}
+
 
 async function register(context, { cwd }) {
-    context.global.setSync("_readFileSync", new ivm.Reference(createReadFileCallback(cwd)));
-    
-    
-    const injectedCode = fs.readFileSync(
-        path.join(__dirname, 'fs_injected.js'),
-        'utf-8'
-    );
-    await context.eval(injectedCode);
+  context.global.setSync("_readFileSync", new ivm.Reference(createReadFileCallback(cwd)));
+  context.global.setSync("_readdirSync", new ivm.Reference(createReaddirCallback(cwd)));
+
+
+  const injectedCode = fs.readFileSync(
+    path.join(__dirname, 'fs_injected.js'),
+    'utf-8'
+  );
+  await context.eval(injectedCode);
 }
 
 module.exports = { register };
