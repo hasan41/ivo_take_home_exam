@@ -13,11 +13,29 @@ The agent can solve a few of the questions out of the box. But in order to reall
 -   You will be graded on the percent of correct answers, and the median amount of time taken. We will run `pnpm play --iterations=5` and judge the results.
 -   **Do not** roll your own crypto!
 
+## My Solution
+
+I extended the sandboxed runtime with new modules (`crypto`, `sqlite`, `http`) and added TypeScript helpers in `agent_helpers/` so the LLM agent has single-call access to all operations needed. The system prompt was rewritten with exact code templates per challenge type, keeping every answer well within the 60s limit.
+
+**Single-run result before submitting:**
+- ✅ 12/12 correct (100%)
+- ⏱ Median: ~14.6s (beats the 16.93s baseline)
+
+---
+
 ## Setup
 
+> ⚠️ **Node 24 is required** — `isolated-vm` does not build with Node 25+. Ensure `node@24` is on your PATH before installing packages.
+
+On macOS with Homebrew:
+```bash
+brew install node@24
+export PATH="/opt/homebrew/opt/node@24/bin:$PATH"
+```
+
 -   Copy `env.template` to `.env` and fill in `OPENAI_API_KEY`.
--   Make sure you have a C++ compiler installed.
--   Install packages with `pnpm i` (or maybe `npm i`, not sure. Haven't tried it.)
+-   Make sure you have a C++ compiler installed (`xcode-select --install` on macOS).
+-   Install packages: `pnpm i` or `npm i` (with Node 24 on PATH).
 
 ## Instructions
 
