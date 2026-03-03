@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Answer files (runtime generated)
+challenges/**/answer.txt
+
+# Temp files
+tmp-*
+/tmp/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build outputs
+dist/
+build/
