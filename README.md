@@ -17,9 +17,9 @@ The agent can solve a few of the questions out of the box. But in order to reall
 
 I extended the sandboxed runtime with new modules (`crypto`, `sqlite`, `http`) and added TypeScript helpers in `agent_helpers/` so the LLM agent has single-call access to all operations needed. The system prompt was rewritten with exact code templates per challenge type, keeping every answer well within the 60s limit.
 
-**Single-run result before submitting:**
-- ✅ 12/12 correct (100%)
-- ⏱ Median: ~14.6s (beats the 16.93s baseline)
+**Verified result (`pnpm play --iterations=5`):**
+- ✅ 60/60 correct (100% across all 5 iterations)
+- ⏱ Overall median: **9.31s** (baseline is 16.93s — nearly 2× faster)
 
 ---
 
